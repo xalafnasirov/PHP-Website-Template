@@ -1,0 +1,20 @@
+
+RewriteEngine On
+
+#RewriteRule ^([0-9a-zA-Z-_]+)$ index.php?route=$1
+
+RewriteRule ^$ index.php?route=home.show$1
+
+RewriteRule ^home$ index.php?route=home.show$1
+
+RewriteRule ^profile/edit/([0-9a-zA-Z-_]+)$ index.php?route=profile.update&id=$2
+
+RewriteRule ^links$ index.php?route=links.edit$1
+
+RewriteRule ^blogs/add$ index.php?route=blogs.post$1
+
+RewriteRule ^blogs/edit$ index.php?route=blogs.update$1
+
+RewriteRule ^login$ login.php?error=$1
+
+RewriteRule ^login/([0-9a-zA-Z-_]+)$ login.php?error=$1
