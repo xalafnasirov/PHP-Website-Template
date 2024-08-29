@@ -6,43 +6,70 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['action'])) {
         /// LOGIN ///
         if ($_POST['action'] == 'login') {
+            header('Content-Type: application/json');
+
             $input = file_get_contents('php://input'); // Raw data as a string
             parse_str($input, $login); // Array data
 
+            if ($login['username'] === null) {
+                $res['message'] = 'Please fill all the information';
+                $res['status'] = 'warning';
+            }
+
+            if ($login['password'] ===  null) {
+                $res['message'] = 'Please fill all the information';
+                $res['status'] = 'warning';
+            }
+
+            $res = [];
+
+
             $table = 'users';
 
-            $sql = "SELECT id, password FROM $table
+            $sql = "SELECT id, password, username FROM $table
                 WHERE username=:username";
 
             $sth = $db->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
             $sth->execute(['username' => $login['username']]);
+
             if ($sth->rowCount() > 0) {
-                $user_info = $sth->fetchAll();
-                
+                $password_hash = $sth->fetchColumn(1);
+                $username = $sth->fetchColumn(2);
+
+                // LOGIN SUCCESSFUL
+                if (password_verify($login['password'], $password_hash)) {
+
+                    
+                    
+                    $res['message'] = 'Login successful, username: ' . $_SESSION['username'] ;
+                    $res['status'] = 'success';
+
+                    $_SESSION['is_logined'] = true;
+                    $_SESSION['username'] = 'salam'; 
+
+                // LOGIN FAILED
+                } else {
+                    $res['message'] = 'Login failed';
+                    $res['status'] = 'error';
+                }  
+            // USER NOT FOUND              
+            } else {
+                $res['message'] = 'User not found';
+                $res['status'] = 'warning';
             }
 
-            // $sql = "insert into users (name, password) value ( '" . $login['name'] . "', '" . $login['password'] . "')";
-            // if ($db->query($sql)) {
-            //     $res['message'] = 'User added';
-            //     $res['status'] = 'success';
-            // } else {
-            //     $res['message'] = 'User didn\'t added';
-            //     $res['status'] = 'error';
-            // }
-
-            // header('Content-Type: text/plain');
-            // echo json_encode($sql); // Encode the array as a JSON string
+            echo json_encode($res);
 
             ///  REGISTER ///
         } elseif ($_POST['action'] == 'register') {
             $user_data = [
-                'username' => 'khalafnasirov',
-                'email' => 'email.com',
+                'username' => 'salam',
+                'email' => 'email.yeni',
                 'firstname' => 'gsdgsdg',
                 'lastname' => 'gsdgsg',
-                'password' => '1234',
+                'password' => password_hash('1234', PASSWORD_BCRYPT),
                 'phone' => 50,
-                'birth' => 'sgddsg',
+                'birth' => date('Y-m-d H:i:s'),
                 'image' => 'sdgsg',
                 'token' => 'dgsdgsdg',
                 'otp' => 1,

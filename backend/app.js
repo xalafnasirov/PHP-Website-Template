@@ -7,6 +7,7 @@ function add(from, to) {
     console.log(to);
 }
 
+// LIVE SENDING REQUESTS
 function send_request(e, data, action) {
     e.preventDefault();
     console.log("submitted");
@@ -19,11 +20,13 @@ function send_request(e, data, action) {
         dataType: 'json',
         success: function (response) {
 
-            console.log("Raw: " + response.status);
-            console.log("Message: " + response.message);
+            
+
+            // console.log("Raw: " + response.status);
+            // console.log("Message: " + response.message);
 
             if (response.status == 'success') {  
-                alert(response.messsage);
+                alert(response.status + ": " + response.message)
                 //Redirect to a different page or show a success message
                 switch (data['action']) {
                     case 'login':
@@ -32,11 +35,12 @@ function send_request(e, data, action) {
                     case 'register':
                         route('home');
                     default:
+                        alert('Couldnt redirected');
                         break;
                 }
             } else {
                 // Show an error message
-                alert("Error: " + response.message);
+                alert(response.status + ": " + response.message)
             }
         },
         error: function (xhr, status, error) {

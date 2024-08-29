@@ -12,6 +12,6 @@ $restricted_pages = array (
 
 <script>
     // login request data
-    var login_data = {};
+    var user_data = {};
 
 </script>

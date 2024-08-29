@@ -53,18 +53,18 @@ include 'backend/app.php';
                             <div class="content">
                                 <form id="loginForm" method="post" class="form-validate">
                                     <div class="form-group">
-                                        <input oninput="add(this, login_data)" id="login-username" type="text"
-                                            name="name" required data-msg="Please enter your username"
+                                        <input oninput="add(this, user_data)" id="login-username" type="text"
+                                            name="username" required="required" data-msg="Please enter your username"
                                             class="input-material">
                                         <label for="login-username" class="label-material">User Name</label>
                                     </div>
                                     <div class="form-group">
-                                        <input oninput="add(this, login_data)" id="login-password" type="password"
-                                            name="password" required data-msg="Please enter your password"
+                                        <input oninput="add(this, user_data)" id="login-password" type="password"
+                                            name="password" required="required" data-msg="Please enter your password"
                                             class="input-material">
                                         <label for="login-password" class="label-material">Password</label>
                                     </div>
-                                    <button onclick="send_request(event, login_data, 'login')" type="submit"
+                                    <button onclick="send_request(event, user_data, 'login')" type="submit"
                                         id="login" class="btn btn-primary">Login</button>
                                 </form><a href="#" class="forgot-pass">Forgot Password?</a><br><small>Do not have
                                     an account? </small><a href="register.html" class="signup">Signup</a>

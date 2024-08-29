@@ -71,7 +71,7 @@ function insert_data($table, $data) {
 
     $sql = "INSERT INTO $table (" . implode (", ", $keys) . ") VALUES ('" . implode ("', '", $values) . "')";
     try {
-        $db->query($sql); 
+        return $db->query($sql); 
     } catch (PDOException $e) {
         return false;
     }

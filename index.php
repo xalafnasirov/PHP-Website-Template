@@ -43,10 +43,6 @@
     ###############
 
     
-
-
-  $db->query($sql);
-    
     // ROUTES
     if (isset($_GET['route'])) {
         $route = $_GET['route'];

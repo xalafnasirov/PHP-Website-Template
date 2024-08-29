@@ -2,8 +2,6 @@
 
 session_start();
 
-if (!isset($_SESSION['login']) || $_SESSION['login'] != '') {
+if (!isset($_SESSION['username'])) {
     header("Location: login");
 }
-
-//show (basename($_SERVER['SCRIPT_FILENAME']));
